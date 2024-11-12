@@ -5,6 +5,7 @@
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "rootDir": "./src",
+        "declaration":  true,
         "outDir": "dist",
         "esModuleInterop": true,
         "moduleResolution": "Node16"

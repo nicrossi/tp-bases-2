@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { connectToMongoDB } from './mongoConnection';
+import clienteRouter from './api/Cliente.router';
 
 const port = 3000;
 
@@ -16,6 +17,7 @@ export class Server {
     }
 
     startServer() {
+        this.app.use(express.json());
         // port
         this.app.listen(port, () => {
             console.log('Listening on port ' + port)
@@ -25,6 +27,8 @@ export class Server {
         this.app.use('/healthcheck', (req: Request, res: Response) => {
             res.send('OK');
         })
+
+        this.app.use('/clientes', clienteRouter)
 
         // this prints the error in the console, rather than in the response!
         this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

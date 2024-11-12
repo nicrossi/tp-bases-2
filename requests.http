@@ -1,0 +1,57 @@
+@url = http://localhost:3000
+
+### Server healthcheck
+GET {{url}}/healthcheck
+
+
+### Create a new client
+POST {{url}}/clientes/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Buzz",
+  "apellido": "Lightyear",
+  "direccion": "123 Main St",
+  "activo": true,
+  "telefonos": {
+    "codigo_area": "011",
+    "nro_telefono": "12345678",
+    "tipo": "cel"
+  }
+}
+
+### Update a client by nro_cliente
+PUT {{url}}/clientes/1
+Content-Type: application/json
+Accept: application/json
+
+
+{
+  "nombre": "Woody",
+  "apellido": "Cowboy",
+  "direccion": "123 Main St",
+  "activo": true,
+  "telefonos": [
+    {
+    "codigo_area": "011",
+    "nro_telefono": "12345678",
+    "tipo": "cel"
+    },
+    {
+      "codigo_area": "011",
+      "nro_telefono": "42424659",
+      "tipo": "tel"
+    }
+  ]
+}
+
+### Delete a client by nro_cliente
+DELETE {{url}}/clientes/10
+Content-Type: application/json
+Accept: application/json
+
+### Get client by nro_cliente
+GET {{url}}/clientes/11
+Content-Type: application/json
+Accept: application/json
