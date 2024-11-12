@@ -1,0 +1,26 @@
+{
+	"name": "TPO Bases de datos 2",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/tp-bases-2",
+
+	// "features": {},
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"mongodb.mongodb-vscode",
+				"ms-azuretools.vscode-docker",
+				"humao.rest-client"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	 "forwardPorts": [3000, 27017],
+
+	"postCreateCommand": "npm install"
+}
