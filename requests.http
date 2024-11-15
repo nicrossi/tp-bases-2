@@ -56,12 +56,52 @@ GET {{url}}/clientes/11
 Content-Type: application/json
 Accept: application/json
 
-## Post product
+
+
+### Post product
+POST {{url}}/productos/
+Content-Type: application/json
+Accept: application/json
+
 {
-  "codigo_producto": 1000,
-  "nombre": "arroz",
+  "codigo_producto": 2000,
+  "nombre": "fideos",
   "marca": "marolio",
-  "descripcion": "blanco",
-  "precio": 199.99,
-  "stock": 10
+  "descripcion": "tipo guiseros",
+  "precio": 249.99,
+  "stock": 20
 }
+
+### Get product by codigo_producto
+GET {{url}}/productos/1000
+Content-Type: application/json
+Accept: application/json
+
+### Update a product by codigo_producto
+PUT {{url}}/productos/1000
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "arroz premium",
+  "marca": "marolio",
+  "descripcion": "arroz largo fino",
+  "precio": 209.99,
+  "stock": 50
+}
+
+### Delete a product by codigo_producto
+DELETE {{url}}/productos/1000
+Content-Type: application/json
+Accept: application/json
+
+
+# // ## Post product
+# //{
+# //  "codigo_producto": 1000,
+# //  "nombre": "arroz",
+# //  "marca": "marolio",
+# //  "descripcion": "blanco",
+# //  "precio": 199.99,
+# //  "stock": 10
+# // }
