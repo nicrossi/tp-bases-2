@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { connectToMongoDB } from './mongoConnection';
 import clienteRouter from './api/Cliente.router';
+import productoRouter from './api/Producto.router';
 
 const port = 3000;
 
@@ -29,6 +30,8 @@ export class Server {
         })
 
         this.app.use('/clientes', clienteRouter)
+
+        this.app.use('/productos', productoRouter); 
 
         // this prints the error in the console, rather than in the response!
         this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
