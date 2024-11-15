@@ -10,7 +10,7 @@ export interface Product extends Document {
 }
 
 const ProductSchema: Schema = new Schema({
-  nro_cliente: { type: Number, unique: true },
+  codigo_producto: { type: Number, unique: true },
   nombre: { type: String, required: true },
   marca: { type: String, required: true },
   descripcion: { type: String, required: true },

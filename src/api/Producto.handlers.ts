@@ -5,7 +5,7 @@ export async function createProduct(req: Request, res: Response, next: NextFunct
     try {
         const product = new Producto(req.body as Product);
         const savedProduct = await product.save();
-        console.log(`Product created with 'codigo_pproducto' ${savedProduct.codigo_producto}`);
+        console.log(`Product created with 'codigo_producto' ${savedProduct.codigo_producto}`);
         res.status(201).json(savedProduct);
     } catch (error: any) {
         console.error('Error creating product:', error);

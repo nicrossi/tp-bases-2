@@ -94,14 +94,3 @@ Accept: application/json
 DELETE {{url}}/productos/1000
 Content-Type: application/json
 Accept: application/json
-
-
-# // ## Post product
-# //{
-# //  "codigo_producto": 1000,
-# //  "nombre": "arroz",
-# //  "marca": "marolio",
-# //  "descripcion": "blanco",
-# //  "precio": 199.99,
-# //  "stock": 10
-# // }
