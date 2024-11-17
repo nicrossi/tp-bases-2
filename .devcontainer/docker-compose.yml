@@ -16,6 +16,8 @@ services:
 
     environment:
       MONGO_DB_NAME: expensesTracking_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   db:
     image: mongo:latest
@@ -28,5 +30,14 @@ services:
     #  MONGO_INITDB_ROOT_USERNAME: root
     #  MONGO_INITDB_ROOT_PASSWORD: example
 
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
 volumes:
   mongodb-data:
+  redis-data:
