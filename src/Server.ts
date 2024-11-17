@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { connectToMongoDB } from './mongoConnection';
 import clienteRouter from './api/Cliente.router';
 import productoRouter from './api/Producto.router';
+import { connectToRedis } from "./redisConnection";
 
 const port = 3000;
 
@@ -15,6 +16,7 @@ export class Server {
 
     private async initializeDataSources() {
         await connectToMongoDB();
+        await connectToRedis();
     }
 
     startServer() {
