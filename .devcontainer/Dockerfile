@@ -14,3 +14,10 @@ RUN . /etc/os-release \
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y redis-tools \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+# Start script
+EXPOSE 3000
+
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+CMD ["/usr/local/bin/start.sh"]
