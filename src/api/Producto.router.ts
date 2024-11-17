@@ -13,4 +13,10 @@ productoRouter.delete('/:codigo_producto', handlers.deleteProduct);
 
 productoRouter.get('/:codigo_producto', handlers.getProduct);
 
+productoRouter.get('/:codigo_producto/stock', handlers.getStockLevel);
+
+productoRouter.put('/:codigo_producto/stock', handlers.updateStockLevel);
+
+productoRouter.post('/:codigo_producto/stock', handlers.setStockLevel);
+
 export default productoRouter;

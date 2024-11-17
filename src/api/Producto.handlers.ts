@@ -1,11 +1,13 @@
 import { Response, Request, NextFunction } from 'express';
 import Producto, { Product } from '../schemas/Producto';
+import RedisService from "../service/redisService";
 
 export async function createProduct(req: Request, res: Response, next: NextFunction) {
     try {
         const product = new Producto(req.body as Product);
         const savedProduct = await product.save();
         console.log(`Product created with 'codigo_producto' ${savedProduct.codigo_producto}`);
+        await RedisService.setProductStock(product.codigo_producto.toString(), req.body?.stock || 0);
         res.status(201).json(savedProduct);
     } catch (error: any) {
         console.error('Error creating product:', error);
@@ -29,6 +31,9 @@ export async function updateProduct(req: Request, res: Response, next: NextFunct
             res.status(404).json({ error: 'Product not found' });
             console.log(`Product with 'codigo_producto' ${codigo_producto} not found`);
         } else {
+            if (req.body?.stock) {
+                await RedisService.setProductStock(codigo_producto.toString(), req.body?.stock);
+            }
             res.status(200).json(updatedProduct);
             console.log(`Product with 'codigo_producto' ${codigo_producto} updated`);
         }
@@ -45,6 +50,7 @@ export async function deleteProduct(req: Request, res: Response, next: NextFunct
         console.log(`Deleting product with 'codigo_producto' ${codigo_producto}`);
 
         await Producto.findOneAndDelete({ codigo_producto });
+        await RedisService.deleteProductStock(codigo_producto.toString())
         console.log(`Product with 'codigo_producto' ${codigo_producto} deleted`);
         res.status(204).send();
     } catch (error: any) {
@@ -88,6 +94,43 @@ export async function getAllProducts(req: Request, res: Response, next: NextFunc
         }
     } catch (error: any) {
         console.error('Error getting products:', error);
+        res.status(500).json({ error: `Internal Server Error: ${error.message}` });
+        next(error);
+    }
+}
+
+export async function getStockLevel(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { codigo_producto } = req.params;
+        const stock = await RedisService.getProductStock(codigo_producto)
+        res.status(200).json({ codigo_producto, stock })
+    } catch (error: any) {
+        console.error('Error getting stock:', error);
+        res.status(500).json({ error: `Internal Server Error: ${error.message}` });
+        next(error);
+    }
+}
+
+export async function updateStockLevel(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { codigo_producto } = req.params;
+        const change = req.body?.change;
+        const newStock = await RedisService.updateProductStock(codigo_producto, change);
+        res.status(200).json({ codigo_producto, stock: newStock });
+    } catch (error: any) {
+        console.error('Error updating stock:', error);
+        res.status(500).json({ error: `Internal Server Error: ${error.message}` });
+        next(error);
+    }
+}
+
+export async function setStockLevel(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { codigo_producto } = req.params;
+        await RedisService.setProductStock(codigo_producto.toString(), req.body?.stock || 0);
+        res.status(200).json({ codigo_producto, stock: req.body?.stock });
+    } catch (error: any) {
+        console.error('Error updating stock:', error);
         res.status(500).json({ error: `Internal Server Error: ${error.message}` });
         next(error);
     }

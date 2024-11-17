@@ -94,3 +94,27 @@ Accept: application/json
 DELETE {{url}}/productos/1000
 Content-Type: application/json
 Accept: application/json
+
+
+### Get stock for a product
+GET {{url}}/productos/4/stock
+Content-Type: application/json
+Accept: application/json
+
+### Update stock
+PUT {{url}}/productos/4/stock
+Content-Type: application/json
+Accept: application/json
+
+{
+  "change": -50
+}
+
+### Set stock level
+POST {{url}}/productos/4/stock
+Content-Type: application/json
+Accept: application/json
+
+{
+  "stock": 100
+}

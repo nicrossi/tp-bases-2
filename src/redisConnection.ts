@@ -24,3 +24,5 @@ export async function connectToRedis() {
         console.error('Error connecting to Redis:', error);
     }
 }
+
+export default redis;

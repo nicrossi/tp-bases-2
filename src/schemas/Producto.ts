@@ -6,7 +6,7 @@ export interface Product extends Document {
   marca: string;
   descripcion: string;
   precio: number;
-  stock: number;
+//  stock: number;
 }
 
 const ProductSchema: Schema = new Schema({
@@ -15,7 +15,7 @@ const ProductSchema: Schema = new Schema({
   marca: { type: String, required: true },
   descripcion: { type: String, required: true },
   precio: { type: Number, required: true },
-  stock: { type: Number, required: true }
+  //stock: { type: Number, required: true }
 });
 
 const AutoIncrement = require('mongoose-sequence')(mongoose);
