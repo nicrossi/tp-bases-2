@@ -37,3 +37,10 @@ Accept: application/json
 GET {{url}}/clientes/query/7
 Content-Type: application/json
 Accept: application/json
+
+### Query 8: TODO
+
+### Query 9: Listar los datos de todas las facturas que contengan productos de las marcas “Ipsum”
+GET {{url}}/facturas/query/9
+Content-Type: application/json
+Accept: application/json

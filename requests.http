@@ -97,6 +97,19 @@ Accept: application/json
   "stock": 100
 }
 
+### Post product
+POST {{url}}/productos/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Salsa Pesto",
+  "marca": "Marolio",
+  "descripcion": "Lista para usar",
+  "precio": 350.20,
+  "stock": 200
+}
+
 ### Get products
 GET {{url}}/productos/
 Content-Type: application/json
@@ -156,11 +169,27 @@ Accept: application/json
   "items": [
     {
       "codigo_producto": 1,
-      "cantidad": 50
+      "cantidad": 1
     },
     {
-      "codigo_producto": 2,
-      "cantidad": 100
+      "codigo_producto": 4,
+      "cantidad": 1
     }
   ]
 }
+
+### Get facturas by brand
+GET {{url}}/facturas/query/9
+Content-Type: application/json
+Accept: application/json
+
+
+### Get facturas by brand
+GET {{url}}/facturas?marca=Marolio
+Content-Type: application/json
+Accept: application/json
+
+### Get facturas
+GET {{url}}/facturas/
+Content-Type: application/json
+Accept: application/json

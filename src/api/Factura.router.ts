@@ -17,4 +17,9 @@ facturaRouter.get('/query/7',(req:Request, res:Response, next:NextFunction) => {
     handlers.getFacturasByClient(req, res, next);
 });
 
+facturaRouter.get('/query/9',(req:Request, res:Response, next:NextFunction) => {
+    req.query.marca = 'Ipsum';
+    handlers.getFacturasByProductBrand(req, res, next);
+});
+
 export default facturaRouter;

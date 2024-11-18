@@ -74,9 +74,13 @@ export async function deleteFactura(req: Request, res: Response, next: NextFunct
 
 export async function getFacturas(req: Request, res: Response, next: NextFunction) {
     try {
-        const invoices = await Factura.find();
-        console.log(`Getting all invoices`);
-        res.status(200).json(invoices);
+        if (req.query.marca) {
+            await getFacturasByProductBrand(req, res, next);
+        } else {
+            const invoices = await Factura.find();
+            console.log(`Getting all invoices`);
+            res.status(200).json(invoices);
+        }
     } catch (error: any) {
         console.error('Error getting invoices:', error);
         res.status(500).json({ error: `Internal Server Error: ${error.message}` });
@@ -127,5 +131,25 @@ export async function getFacturasByClient(req: Request, res: Response, next: Nex
         res.status(500).json({ error: `Internal Server Error: ${error.message}` });
         next(error);
     }
-  }
+}
+
+export async function getFacturasByProductBrand(req: Request, res: Response, next: NextFunction) {
+    const marca = req.query.marca as string;
+
+    try {
+        const products = await Producto.find({ marca: { $regex: new RegExp(marca, 'i') } }).select('codigo_producto');
+        const productCodes = products.map(producto => producto.codigo_producto);
+        const facturas = await Factura.find({
+            'items.codigo_producto': { $in: productCodes }
+        });
+      if (facturas.length === 0) {
+        return res.status(200).json({ message: "No hay facturas con productos de la marca especificada." });
+      }
+      res.status(200).json(facturas);
+    } catch (error: any) {
+        console.error('Error getting invoices:', error);
+        res.status(500).json({ error: `Internal Server Error: ${error.message}` });
+        next(error);
+    }
+}
   
