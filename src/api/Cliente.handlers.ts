@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import Cliente, { Client } from '../schemas/Cliente';
+import RedisService from "../service/redisService";
 
 export async function createClient(req: Request, res: Response, next: NextFunction) {
     try {
@@ -124,7 +125,7 @@ export async function getPhones(req: Request, res: Response, next: NextFunction)
 }
 
 export async function getClientsWithBill(req:Request, res:Response, next:NextFunction){
-    try{
+    try {
         console.log('Getting all clients with bill');
         const clients = await Cliente.aggregate([
             {
@@ -154,7 +155,7 @@ export async function getClientsWithBill(req:Request, res:Response, next:NextFun
 }
 
 export async function getClientsWithNoBill(req:Request, res:Response, next:NextFunction){
-    try{
+    try {
         console.log('Getting all clients with no bill');
         const clients = await Cliente.aggregate([
             {
@@ -184,7 +185,7 @@ export async function getClientsWithNoBill(req:Request, res:Response, next:NextF
 }
 
 export async function getClientsWithBillCount(req: Request, res:Response,next:NextFunction){
-    try{
+    try {
         console.log('Getting all clients with bill count');
         const clients = await Cliente.aggregate([
             {
@@ -203,6 +204,21 @@ export async function getClientsWithBillCount(req: Request, res:Response,next:Ne
         console.log('All clients with bill count found');
     } catch(error:any){
         console.error('Error getting clients with bill count:', error);
+        res.status(500).json({ error: `Internal Server Error: ${error.message}` });
+        next(error);
+    }
+}
+
+export async function getClientExpenses(req: Request, res:Response,next:NextFunction){
+    try {
+        const clients = await Cliente.find({}, { _id: 0, nombre: 1, apellido: 1, nro_cliente: 1 });
+        const result = await Promise.all(clients.map(async (client) => {
+            const gasto_total_iva = await RedisService.getClientExpenses(client.nro_cliente);
+            return { nombre: client.nombre, apellido: client.apellido, gasto_total_iva };
+        }));
+        res.status(200).json(result);
+    } catch(error : any) {
+        console.error('Error getting clients expenses:', error);
         res.status(500).json({ error: `Internal Server Error: ${error.message}` });
         next(error);
     }

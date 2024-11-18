@@ -193,3 +193,8 @@ Accept: application/json
 GET {{url}}/facturas/
 Content-Type: application/json
 Accept: application/json
+
+### Get clientes + total expense
+GET {{url}}/clientes/query/10
+Content-Type: application/json
+Accept: application/json

@@ -36,4 +36,6 @@ clienteRouter.get('/query/5',handlers.getClientsWithNoBill);
 
 clienteRouter.get('/query/6',handlers.getClientsWithBillCount);
 
+clienteRouter.get('/query/10', handlers.getClientExpenses);
+
 export default clienteRouter;

@@ -67,6 +67,19 @@ const RedisService = {
             console.log(`Total expended for 'nro_cliente' ${nro_cliente} updated by $${change}`);
         }
     },
+
+    // Get total expenses for a client
+    async getClientExpenses(nro_cliente: number): Promise<number> {
+        const key = `total_expended:${nro_cliente}`;
+        const totalExpended = await redis.get(key);
+        if (totalExpended) {
+            const total = parseFloat(totalExpended);
+            return parseFloat(total.toFixed(2));
+        }
+        const errorMessage = `No expenses were registered for client 'nro_cliente' ${nro_cliente}`;
+        console.log(errorMessage);
+        throw new Error(errorMessage);
+    },
 }
 
 export default RedisService;
