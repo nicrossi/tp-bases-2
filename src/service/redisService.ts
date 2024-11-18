@@ -40,6 +40,33 @@ const RedisService = {
             ? console.log(`Stock level for 'codigo_producto' was deleted`)
             : console.log(`Stock level for 'codigo_producto' was not found`);
     },
+
+    async isProductInStock(codigo_producto: string, quantity: number) {
+        try {
+            const stock = await this.getProductStock(codigo_producto);
+            return stock ? stock >= quantity : false;
+        } catch (error) {
+            console.log(error)
+            return false;
+        }
+    },
+
+    async validateProductsInStock(items: Array<{ nro_item: number, cantidad: number, codigo_producto: string }>) {
+        await Promise.all(items.map(async (item : any) => {
+            if (!await this.isProductInStock(item.codigo_producto, item.cantidad)) {
+                throw new Error(`Product 'codigo_producto' ${item.codigo_producto} is not in stock for #${item.cantidad} items`);
+            }
+        }));
+    },
+
+    // Update total expenses for a client
+    async updateClientExpenses(nro_cliente: number, change: number): Promise<void> {
+        if (change) {
+            const key = `total_expended:${nro_cliente}`;
+            await redis.incrbyfloat(key, change);
+            console.log(`Total expended for 'nro_cliente' ${nro_cliente} updated by $${change}`);
+        }
+    },
 }
 
 export default RedisService;

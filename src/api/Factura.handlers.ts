@@ -1,9 +1,27 @@
 import { Response, Request, NextFunction } from "express";
 import Factura, { Invoice } from "../schemas/Factura";
+import RedisService from "../service/redisService";
+import {it} from "node:test";
+import Producto, {Product} from "../schemas/Producto";
+import mongoService from "../service/mongoService";
 
 export async function createFactura(req: Request, res: Response, next: NextFunction) {
     try {
-        const invoice = new Factura(req.body as Invoice);
+        const invoiceData = req.body as Invoice;
+        invoiceData.total_sin_iva = 0.0;
+        invoiceData.total_con_iva = 0.0;
+        const items = invoiceData.items;
+        await RedisService.validateProductsInStock(items)
+        for (const item of items) {
+            await RedisService.updateProductStock(item.codigo_producto, -1 * item.cantidad);
+            const product: Product = await mongoService.getProduct(item.codigo_producto);
+            invoiceData.total_sin_iva += (product.precio * item.cantidad);
+            invoiceData.total_con_iva += ((product.precio + (product.precio * invoiceData.iva)) * item.cantidad);
+            const index: number = items.indexOf(item);
+            invoiceData.items[index].nro_item = index + 1;
+        }
+        RedisService.updateClientExpenses(invoiceData.nro_cliente, invoiceData.total_con_iva);
+        const invoice = new Factura(invoiceData);
         const savedInvoice = await invoice.save();
         console.log(`Invoice with created with 'nro_factura' ${savedInvoice.nro_factura}`);
         res.status(201).json(savedInvoice);

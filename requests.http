@@ -64,16 +64,41 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "codigo_producto": 2000,
-  "nombre": "fideos",
-  "marca": "marolio",
-  "descripcion": "tipo guiseros",
-  "precio": 249.99,
-  "stock": 20
+  "nombre": "Salsa de tomate",
+  "marca": "Ipsum",
+  "descripcion": "Original Italiana",
+  "precio": 250.49,
+  "stock": 200
 }
 
-### Get product by codigo_producto
-GET {{url}}/productos/1000
+### Post product
+POST {{url}}/productos/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Salsa Pizza",
+  "marca": "Ipsum",
+  "descripcion": "Lista para usar",
+  "precio": 300.49,
+  "stock": 100
+}
+
+### Post product
+POST {{url}}/productos/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Salsa Pesto",
+  "marca": "Ipsum",
+  "descripcion": "Lista para usar",
+  "precio": 300.49,
+  "stock": 100
+}
+
+### Get products
+GET {{url}}/productos/
 Content-Type: application/json
 Accept: application/json
 
@@ -97,7 +122,7 @@ Accept: application/json
 
 
 ### Get stock for a product
-GET {{url}}/productos/4/stock
+GET {{url}}/productos/2/stock
 Content-Type: application/json
 Accept: application/json
 
@@ -117,4 +142,25 @@ Accept: application/json
 
 {
   "stock": 100
+}
+
+### Create factura
+POST localhost:3000/facturas/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nro_cliente": 1,
+  "fecha": "2024-11-18",
+  "iva": 0.21,
+  "items": [
+    {
+      "codigo_producto": 1,
+      "cantidad": 50
+    },
+    {
+      "codigo_producto": 2,
+      "cantidad": 100
+    }
+  ]
 }
