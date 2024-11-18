@@ -169,11 +169,11 @@ Accept: application/json
   "items": [
     {
       "codigo_producto": 1,
-      "cantidad": 1
+      "cantidad": 3
     },
     {
-      "codigo_producto": 4,
-      "cantidad": 1
+      "codigo_producto": 2,
+      "cantidad": 2
     }
   ]
 }

@@ -14,6 +14,19 @@ fi
 echo "Initializing..."
 sleep 15
 
+# Drop all MongoDB collections
+echo "Dropping all MongoDB collections..."
+mongosh 'expensesTracking_db' <<EOF
+db.getCollectionNames().forEach(function(collection) {
+    db[collection].drop();
+});
+EOF
+
+echo "Flushing redis"
+redis-cli -u redis://redis:6379 <<EOF
+FLUSHDB
+EOF
+
 # Insert client "Jacob Cooper"
 curl -X POST --location "http://localhost:3000/clientes/" \
     -H "Content-Type: application/json" \
@@ -105,9 +118,82 @@ curl -X POST --location "http://localhost:3000/productos/" \
           "stock": 100
         }'
 
-curl -X GET --location "http://localhost:3000/productos/1" \
+# Insert other porducts
+curl -X POST --location "http://localhost:3000/productos/" \
     -H "Content-Type: application/json" \
-    -H "Accept: application/json"
+    -H "Accept: application/json" \
+    -d '{
+          "nombre": "Atun",
+          "marca": "Bulnez",
+          "descripcion": "Lomitos al natural",
+          "precio": 1900.49,
+          "stock": 250
+        }'
+
+curl -X POST --location "http://localhost:3000/productos/" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{
+          "nombre": "Ketchup",
+          "marca": "Heinz",
+          "descripcion": "Sin azucar",
+          "precio": 3000.49,
+          "stock": 200
+        }'
+
+# Insert factura for Jacob Cooper
+curl -X POST --location "http://localhost:3000/facturas/" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{
+          "nro_cliente": 1,
+          "fecha": "2024-11-18",
+          "iva": 0.21,
+          "items": [
+            {
+              "codigo_producto": 1,
+              "cantidad": 3
+            },
+            {
+              "codigo_producto": 2,
+              "cantidad": 2
+            }
+          ]
+        }'
+
+curl -X POST --location "http://localhost:3000/facturas/" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{
+          "nro_cliente": 2,
+          "fecha": "2024-11-18",
+          "iva": 0.21,
+          "items": [
+            {
+              "codigo_producto": 6,
+              "cantidad": 5
+            },
+            {
+              "codigo_producto": 2,
+              "cantidad": 1
+            }
+          ]
+        }'
+
+curl -X POST --location "http://localhost:3000/facturas/" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{
+          "nro_cliente": 1,
+          "fecha": "2024-11-18",
+          "iva": 0.21,
+          "items": [
+            {
+              "codigo_producto": 5,
+              "cantidad": 20
+            }
+          ]
+        }'
 
 
 tail -f app.log
