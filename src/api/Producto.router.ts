@@ -21,4 +21,6 @@ productoRouter.post('/:codigo_producto/stock', handlers.setStockLevel);
 
 productoRouter.get('/query/8', handlers.getProductSoldAtLeastOnce);
 
+productoRouter.get('/query/12', handlers.getProductNotSold);
+
 export default productoRouter;

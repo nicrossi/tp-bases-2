@@ -59,6 +59,11 @@ GET {{url}}/facturas?order=desc
 Content-Type: application/json
 Accept: application/json
 
+### Query 12: Se necesita una vista que devuelva todos los productos que aún no han sido facturados.
+GET {{url}}/productos/query/12
+Content-Type: application/json
+Accept: application/json
+
 ### Requierimiento 13
 ### Cruds Clientes: Implementar la funcionalidad que permita crear nuevos clientes, eliminar
 ### y modificar los ya existentes.
