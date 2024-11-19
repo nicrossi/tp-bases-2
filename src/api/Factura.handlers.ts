@@ -15,8 +15,8 @@ export async function createFactura(req: Request, res: Response, next: NextFunct
         for (const item of items) {
             await RedisService.updateProductStock(item.codigo_producto, -1 * item.cantidad);
             const product: Product = await mongoService.getProduct(item.codigo_producto);
-            invoiceData.total_sin_iva += (product.precio * item.cantidad);
-            invoiceData.total_con_iva += ((product.precio + (product.precio * invoiceData.iva)) * item.cantidad);
+            invoiceData.total_sin_iva += parseFloat((product.precio * item.cantidad).toFixed(2));
+            invoiceData.total_con_iva += parseFloat(((product.precio + (product.precio * invoiceData.iva)) * item.cantidad).toFixed(2));
             const index: number = items.indexOf(item);
             invoiceData.items[index].nro_item = index + 1;
             await RedisService.addProductToSoldSet(item.codigo_producto);
@@ -77,6 +77,8 @@ export async function getFacturas(req: Request, res: Response, next: NextFunctio
     try {
         if (req.query.marca) {
             await getFacturasByProductBrand(req, res, next);
+        } else if (req.query.order) {
+            await getFacturasSortedByDate(req, res, next);
         } else {
             const invoices = await Factura.find();
             console.log(`Getting all invoices`);
@@ -147,6 +149,28 @@ export async function getFacturasByProductBrand(req: Request, res: Response, nex
         return res.status(200).json({ message: "No hay facturas con productos de la marca especificada." });
       }
       res.status(200).json(facturas);
+    } catch (error: any) {
+        console.error('Error getting invoices:', error);
+        res.status(500).json({ error: `Internal Server Error: ${error.message}` });
+        next(error);
+    }
+}
+
+export async function getFacturasSortedByDate(req: Request, res: Response, next: NextFunction) {
+    try {
+        const order = req.query.order === 'desc' ? -1 : 1;
+        const facturas = await Factura.find().sort({ fecha: order });
+        const result = facturas.map((factura) => {
+            return {
+                nro_factura: factura.nro_factura,
+                fecha: factura.fecha,
+                total_sin_iva: factura.total_sin_iva,
+                iva: factura.iva,
+                total_con_iva: factura.total_con_iva,
+                items: factura.items
+            };
+        });
+        res.status(200).json(result);
     } catch (error: any) {
         console.error('Error getting invoices:', error);
         res.status(500).json({ error: `Internal Server Error: ${error.message}` });

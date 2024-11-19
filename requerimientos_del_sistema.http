@@ -53,7 +53,11 @@ GET {{url}}/clientes/query/10
 Content-Type: application/json
 Accept: application/json
 
-
+### Query 11: Se necesita una vista que devuelva los datos de las facturas ordenadas por fecha.
+### order=asc or order=desc
+GET {{url}}/facturas?order=desc
+Content-Type: application/json
+Accept: application/json
 
 ### Requierimiento 13
 ### Cruds Clientes: Implementar la funcionalidad que permita crear nuevos clientes, eliminar

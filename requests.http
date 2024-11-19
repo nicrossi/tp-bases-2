@@ -164,13 +164,9 @@ Accept: application/json
 
 {
   "nro_cliente": 1,
-  "fecha": "2024-11-18",
+  "fecha": "2024-11-15",
   "iva": 0.21,
   "items": [
-    {
-      "codigo_producto": 1,
-      "cantidad": 3
-    },
     {
       "codigo_producto": 2,
       "cantidad": 2
@@ -201,5 +197,10 @@ Accept: application/json
 
 ### Get products sold at least once
 GET {{url}}/productos/query/8
+Content-Type: application/json
+Accept: application/json
+
+### Get facturas sorted by date
+GET {{url}}/facturas?orden=asc
 Content-Type: application/json
 Accept: application/json
