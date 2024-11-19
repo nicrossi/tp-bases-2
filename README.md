@@ -1,5 +1,11 @@
 # TP-Base de Datos 2
 
+### Integrantes
+- Nicolás Andres Rossi
+- Santos Galarraga
+- Thomás Busso
+- Desiree Melisa Limachi!
+
 ### Dependencias del proyecto
 Este proyecto depende de los siguientes paquetes de npm:
 
