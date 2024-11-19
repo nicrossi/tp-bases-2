@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import * as handlers from './Producto.handlers';
 
 const productoRouter = Router();
@@ -18,5 +18,7 @@ productoRouter.get('/:codigo_producto/stock', handlers.getStockLevel);
 productoRouter.put('/:codigo_producto/stock', handlers.updateStockLevel);
 
 productoRouter.post('/:codigo_producto/stock', handlers.setStockLevel);
+
+productoRouter.get('/query/8', handlers.getProductSoldAtLeastOnce);
 
 export default productoRouter;

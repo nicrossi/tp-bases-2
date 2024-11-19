@@ -135,3 +135,15 @@ export async function setStockLevel(req: Request, res: Response, next: NextFunct
         next(error);
     }
 }
+
+export async function getProductSoldAtLeastOnce(req: Request, res: Response, next: NextFunction) {
+    try {
+        const soldOnceSet = await RedisService.getProductSoldSet();
+        const products = await Producto.find({ codigo_producto: { $in: soldOnceSet } });
+        res.status(200).json(products);
+    } catch (error : any) {
+        console.error('Error getting product:', error);
+        res.status(500).json({error: `Internal Server Error: ${error.message}`});
+        next(error);
+    }
+}

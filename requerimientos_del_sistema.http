@@ -39,6 +39,9 @@ Content-Type: application/json
 Accept: application/json
 
 ### Query 8: Seleccionar los productos que han sido facturados al menos 1 vez.
+GET {{url}}/productos/query/8
+Content-Type: application/json
+Accept: application/json
 
 ### Query 9: Listar los datos de todas las facturas que contengan productos de las marcas “Ipsum”
 GET {{url}}/facturas/query/9

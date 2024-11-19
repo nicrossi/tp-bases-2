@@ -80,6 +80,18 @@ const RedisService = {
         console.log(errorMessage);
         throw new Error(errorMessage);
     },
+
+    // Add product to sold at least once set
+    async addProductToSoldSet(codigo_producto: string): Promise<void> {
+        const key = `sold_at_least_once`;
+        await redis.sadd(key, codigo_producto);
+        console.log(`Product 'codigo_producto' ${codigo_producto} added to sold set`);
+    },
+
+    async getProductSoldSet(): Promise<string[]> {
+        const key = `sold_at_least_once`;
+        return redis.smembers(key);
+    }
 }
 
 export default RedisService;

@@ -140,12 +140,12 @@ Content-Type: application/json
 Accept: application/json
 
 ### Update stock
-PUT {{url}}/productos/4/stock
+PUT {{url}}/productos/2/stock
 Content-Type: application/json
 Accept: application/json
 
 {
-  "change": -50
+  "change": 50
 }
 
 ### Set stock level
@@ -196,5 +196,10 @@ Accept: application/json
 
 ### Get clientes + total expense
 GET {{url}}/clientes/query/10
+Content-Type: application/json
+Accept: application/json
+
+### Get products sold at least once
+GET {{url}}/productos/query/8
 Content-Type: application/json
 Accept: application/json

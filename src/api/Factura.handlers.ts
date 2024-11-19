@@ -19,6 +19,7 @@ export async function createFactura(req: Request, res: Response, next: NextFunct
             invoiceData.total_con_iva += ((product.precio + (product.precio * invoiceData.iva)) * item.cantidad);
             const index: number = items.indexOf(item);
             invoiceData.items[index].nro_item = index + 1;
+            await RedisService.addProductToSoldSet(item.codigo_producto);
         }
         RedisService.updateClientExpenses(invoiceData.nro_cliente, invoiceData.total_con_iva);
         const invoice = new Factura(invoiceData);
