@@ -76,9 +76,8 @@ const RedisService = {
             const total = parseFloat(totalExpended);
             return parseFloat(total.toFixed(2));
         }
-        const errorMessage = `No expenses were registered for client 'nro_cliente' ${nro_cliente}`;
-        console.log(errorMessage);
-        throw new Error(errorMessage);
+        console.log(`No expenses were registered for client 'nro_cliente' ${nro_cliente}`);
+        return 0.0;
     },
 
     // Add product to sold at least once set
