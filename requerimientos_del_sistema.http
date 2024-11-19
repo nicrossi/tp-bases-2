@@ -52,3 +52,129 @@ Accept: application/json
 GET {{url}}/clientes/query/10
 Content-Type: application/json
 Accept: application/json
+
+
+
+### Requierimiento 13
+### Cruds Clientes: Implementar la funcionalidad que permita crear nuevos clientes, eliminar
+### y modificar los ya existentes.
+
+### Create a new client
+POST {{url}}/clientes/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Buzz",
+  "apellido": "Lightyear",
+  "direccion": "123 Main St",
+  "activo": true,
+  "telefonos": {
+    "codigo_area": "011",
+    "nro_telefono": "12345678",
+    "tipo": "cel"
+  }
+}
+
+### Update a client by nro_cliente
+PUT {{url}}/clientes/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Woody",
+  "apellido": "Cowboy",
+  "direccion": "123 Main St",
+  "activo": true,
+  "telefonos": [
+    {
+      "codigo_area": "011",
+      "nro_telefono": "12345678",
+      "tipo": "cel"
+    },
+    {
+      "codigo_area": "011",
+      "nro_telefono": "42424659",
+      "tipo": "tel"
+    }
+  ]
+}
+
+### Delete a client by nro_cliente
+DELETE {{url}}/clientes/10
+Content-Type: application/json
+Accept: application/json
+
+### Get all clients
+GET {{url}}/clientes/
+Content-Type: application/json
+Accept: application/json
+
+
+### Requierimiento 14
+### Cruds Productos: Implementar la funcionalidad que permita crear nuevos productos y modificar los ya
+### existentes. Tener en cuenta que el precio de un producto es sin IVA.
+
+### Post product
+POST {{url}}/productos/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "Salsa Pizza",
+  "marca": "Ipsum",
+  "descripcion": "Lista para usar",
+  "precio": 300.49,
+  "stock": 100
+}
+
+### Get all products
+GET {{url}}/productos/
+Content-Type: application/json
+Accept: application/json
+
+### Get product by codigo_producto
+GET {{url}}/productos/1
+Content-Type: application/json
+Accept: application/json
+
+### Update a product by codigo_producto
+PUT {{url}}/productos/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nombre": "arroz premium",
+  "marca": "marolio",
+  "descripcion": "arroz largo fino",
+  "precio": 209.99,
+  "stock": 50
+}
+
+### Delete a product by codigo_producto
+DELETE {{url}}/productos/2
+Content-Type: application/json
+Accept: application/json
+
+### Get stock for a product
+GET {{url}}/productos/2/stock
+Content-Type: application/json
+Accept: application/json
+
+### Update stock
+PUT {{url}}/productos/2/stock
+Content-Type: application/json
+Accept: application/json
+
+{
+  "change": 50
+}
+
+### Set stock level
+POST {{url}}/productos/4/stock
+Content-Type: application/json
+Accept: application/json
+
+{
+  "stock": 100
+}
