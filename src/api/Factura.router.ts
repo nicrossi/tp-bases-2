@@ -22,4 +22,6 @@ facturaRouter.get('/query/9',(req:Request, res:Response, next:NextFunction) => {
     handlers.getFacturasByProductBrand(req, res, next);
 });
 
+facturaRouter.get('/query/11', handlers.getFacturasSortedByDate);
+
 export default facturaRouter;
