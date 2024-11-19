@@ -73,6 +73,22 @@ curl -X POST --location "http://localhost:3000/clientes/" \
           ]
         }'
 
+# Insert client "Buzz Lightyear"
+curl -X POST --location "http://localhost:3000/clientes/" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -d '{
+          "nombre": "Buzz",
+          "apellido": "Lightyear",
+          "direccion": "123 Main St",
+          "activo": true,
+          "telefonos": {
+            "codigo_area": "011",
+            "nro_telefono": "12345678",
+            "tipo": "cel"
+          }
+        }'
+
 # Insert Ipsum porducts
 curl -X POST --location "http://localhost:3000/productos/" \
     -H "Content-Type: application/json" \

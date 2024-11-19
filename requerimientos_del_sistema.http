@@ -34,7 +34,7 @@ Accept: application/json
 
 ### Query 7: Listar los datos de todas las facturas que hayan sido compradas
 ### por el cliente de nombre "Kai" y apellido "Bullock".
-GET {{url}}/clientes/query/7
+GET {{url}}/facturas/query/7
 Content-Type: application/json
 Accept: application/json
 
