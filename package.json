@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/Server.ts",
-    "dev": "nodemon ./src/Server.ts"
+    "dev": "nodemon ./src/Server.ts",
+    "extract-datasets": "node dist/scripts/extractDatasets.js",
+    "load-csv": "node dist/scripts/loadCSVToMongoDB.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csvtojson": "^2.0.10",
     "express": "^4.21.1",
     "mongoose": "^8.8.1"
   },
