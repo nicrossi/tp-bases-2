@@ -187,3 +187,8 @@ Accept: application/json
 {
   "stock": 100
 }
+
+### Load data from CSV datasets
+GET {{url}}/data
+Content-Type: application/json
+Accept: application/json
