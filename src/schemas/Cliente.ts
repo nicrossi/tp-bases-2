@@ -5,12 +5,12 @@ export interface Client extends Document {
   nombre: string;
   apellido: string;
   direccion: string;
-  activo: boolean;
-  telefonos: [{
+  activo: number;
+  telefonos: {
     codigo_area: string;
     nro_telefono: string;
     tipo: string;
-  }];
+  }[];
 }
 
 // Schema for the clients collection
@@ -19,7 +19,7 @@ const ClientSchema: Schema = new Schema({
   nombre: { type: String, required: true },
   apellido: { type: String, required: true },
   direccion: { type: String, required: true },
-  activo: { type: Boolean, required: true },
+  activo: { type: Number, required: true },
   telefonos: [{
     codigo_area: { type: String, required: true },
     nro_telefono: { type: String, required: true },

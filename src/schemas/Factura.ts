@@ -7,11 +7,11 @@ export interface Invoice extends Document {
     iva: number;
     total_con_iva: number;
     nro_cliente: number
-    items: [{
+    items: {
         nro_item: number;
         cantidad: number;
         codigo_producto: string;
-    }];
+    }[];
 }
 
 const FacturaSchema = new Schema<Invoice>({

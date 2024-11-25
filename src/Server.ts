@@ -4,6 +4,7 @@ import clienteRouter from './api/Cliente.router';
 import productoRouter from './api/Producto.router';
 import facturaRouter from './api/Factura.router';
 import { connectToRedis } from "./redisConnection";
+import CsvService from "./service/CsvService";
 
 const port = 3000;
 
@@ -37,6 +38,11 @@ export class Server {
         this.app.use('/productos', productoRouter); 
 
         this.app.use('/facturas', facturaRouter);
+
+        this.app.use('/data', async (req: Request, res: Response) => {
+            const rsp = await CsvService.loadData();
+            res.status(rsp.status).send(rsp.message);
+        });
 
         // this prints the error in the console, rather than in the response!
         this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
